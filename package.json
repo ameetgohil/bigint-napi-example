@@ -1,0 +1,22 @@
+{
+   "name": "bigint-napi",
+   "version": "0.1.0",
+   "main": "index.js",
+   "dependencies": {
+      "cmake-js": "^5.1.0",
+      "lodash": "latest",
+      "node-addon-api": "latest"
+   },
+   "cmake-js": {
+      "runtime": "node"
+   },
+   "scripts": {
+      "rebuild": "cmake-js rebuild",
+      "build": "cmake-js compile",
+      "clean": "cmake-js clean",
+      "test": "node index.js",
+      "mocha": "mocha"
+   },
+   "author": "Ameet Gohil",
+   "license": "MIT"
+}
