@@ -4,7 +4,7 @@ project (dut)
 
 file(GLOB SOURCE_FILES "cppsrc/*.cpp")
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
-add_definitions(-DNAPI_VERSION=2147483700)
+add_definitions(-DNAPI_EXPERIMENTAL) # -DSRC_NAPI_INL_H_)
 target_include_directories(${PROJECT_NAME}
   PRIVATE ${CMAKE_SOURCE_DIR}/node_modules/node-addon-api
   PRIVATE ${CMAKE_JS_INC})
