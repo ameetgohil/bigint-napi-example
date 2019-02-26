@@ -1,7 +1,8 @@
 #include <napi.h>
 
 namespace bigintexample {
-    std::int64_t hello();
-    Napi::BigInt HelloWrapped(const Napi::CallbackInfo& info);
+    //    std::uint64_t* set();
+    Napi::BigInt GetWrapped(const Napi::CallbackInfo& info);
+    void SetWrapped(const Napi::CallbackInfo& info);
     Napi::Object Init(Napi::Env env, Napi::Object exports);
 }

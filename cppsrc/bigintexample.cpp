@@ -1,20 +1,45 @@
 #include <napi.h>
+#include <iostream>
 #include "bigintexample.h"
 
-std::int64_t bigintexample::hello() {
-    return 1234;
-}
 
-Napi::BigInt bigintexample::HelloWrapped(const Napi::CallbackInfo& info) {
+
+uint32_t ptr[4] = {0xFF,0x00,0x00,0x00};
+union u32u64_t {
+    uint32_t* sig32;
+    uint64_t* sig64;
+};
+
+u32u64_t gptr;
+
+Napi::BigInt bigintexample::GetWrapped(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-    Napi::BigInt returnValue = Napi::BigInt::New(env, bigintexample::hello());
+    
+    std::cout << gptr.sig64[0] << " " << gptr.sig64[1] << std::endl;
+    Napi::BigInt returnValue = Napi::BigInt::New(env, 0, 2, gptr.sig64);// bigintexample::hello());
 
     return returnValue;
 }
 
+void bigintexample::SetWrapped(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    if(info.Length() > 1 || (info.Length() == 1 && !info[0].IsNumber())) {
+	Napi::TypeError::New(env, "Number expected").ThrowAsJavaScriptException();
+    }
+
+    if(info.Length() == 1) {
+	Napi::BigInt val = info[0].As<Napi::BigInt>();
+	//val.ToWords(2, 0, gptr.sig64);
+    }
+}
+    
+    
+
 
 Napi::Object InitAll(Napi::Env env, Napi::Object exports) {
-    exports.Set("hello", Napi::Function::New(env, bigintexample::HelloWrapped));
+    gptr.sig32 = ptr;
+    exports.Set("set", Napi::Function::New(env, bigintexample::SetWrapped));
+    exports.Set("get", Napi::Function::New(env, bigintexample::GetWrapped));
     return exports;
 }
   
