@@ -23,13 +23,14 @@ Napi::BigInt bigintexample::GetWrapped(const Napi::CallbackInfo& info) {
 
 void bigintexample::SetWrapped(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
+    uint64_t temp;
     if(info.Length() > 1 || (info.Length() == 1 && !info[0].IsNumber())) {
 	Napi::TypeError::New(env, "Number expected").ThrowAsJavaScriptException();
     }
 
     if(info.Length() == 1) {
 	Napi::BigInt val = info[0].As<Napi::BigInt>();
-	//val.ToWords(2, 0, gptr.sig64);
+	val.ToWords(1, 0, &temp);//gptr.sig64);
     }
 }
     
