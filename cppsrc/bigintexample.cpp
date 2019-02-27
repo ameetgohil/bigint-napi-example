@@ -23,7 +23,7 @@ Napi::BigInt bigintexample::GetWrapped(const Napi::CallbackInfo& info) {
 
 void bigintexample::SetWrapped(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-    uint64_t temp[2];
+    uint64_t *temp;
     int sign_bit = 0;
     size_t size = 1;
     if(info.Length() > 1 || (info.Length() == 1 && !info[0].IsBigInt())) {
