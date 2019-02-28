@@ -15,7 +15,7 @@ u32u64_t gptr;
 Napi::BigInt bigintexample::GetWrapped(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
     
-    std::cout << gptr.sig64[0] << " " << gptr.sig64[1] << std::endl;
+    //std::cout << gptr.sig64[0] << " " << gptr.sig64[1] << std::endl;
     Napi::BigInt returnValue = Napi::BigInt::New(env, 0, 2, gptr.sig64);// bigintexample::hello());
 
     return returnValue;
@@ -23,7 +23,7 @@ Napi::BigInt bigintexample::GetWrapped(const Napi::CallbackInfo& info) {
 
 void bigintexample::SetWrapped(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-    uint64_t *temp;
+    uint64_t temp[2];
     int sign_bit = 0;
     size_t size = 1;
     if(info.Length() > 1 || (info.Length() == 1 && !info[0].IsBigInt())) {
@@ -35,7 +35,7 @@ void bigintexample::SetWrapped(const Napi::CallbackInfo& info) {
 	val.ToWords(&sign_bit, &size, temp);//gptr.sig64);
 	gptr.sig64=(uint64_t*)malloc(2*sizeof(uint64_t));
 	memcpy(gptr.sig64, temp, 2*sizeof(uint64_t));
-	std::cout << gptr.sig64[0] << " " << gptr.sig64[1] << std::endl;
+	//std::cout << gptr.sig64[0] << " " << gptr.sig64[1] << std::endl;
 	//std::cout << temp[0] << std::endl;
     }
 }
